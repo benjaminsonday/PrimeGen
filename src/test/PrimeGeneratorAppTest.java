@@ -8,7 +8,7 @@ import org.junit.Test;
 
 public class PrimeGeneratorAppTest {
 	@Test
-	public void testingNewPrimeNumberGreaterThan() {
+	public void testingNewPrimeNumberGreaterThan() throws Exception {
 		Assert.assertTrue(PrimeGeneratorApp.generatePrimeGreaterThan(7793, FermatPrimeTest.class) == 7817L);
 		Assert.assertTrue(PrimeGeneratorApp.generatePrimeGreaterThan(35267, FermatPrimeTest.class) == 35279L);
 		Assert.assertTrue(PrimeGeneratorApp.generatePrimeGreaterThan(5863513, FermatPrimeTest.class) == 5863519L);
