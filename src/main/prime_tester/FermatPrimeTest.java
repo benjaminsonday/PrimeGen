@@ -20,6 +20,9 @@ public class FermatPrimeTest extends PrimeTester {
 	private static final int DEFAULT_NUM_NUMS_TO_TRY = 1000;
 	
 	private FermatPrimeTest(long number, int numNumsToTry) {
+		if(number > Math.sqrt(Long.MAX_VALUE) - 1)
+			throw new IllegalArgumentException("Need small number than " + number + 
+					"; since we'll have to square it, need <= Math.sqrt(Long.MAX_VALUE)");
 		this.number = number;
 		this.numNumsToTry = numNumsToTry;
 	}
@@ -29,12 +32,12 @@ public class FermatPrimeTest extends PrimeTester {
 	}
 	
 	// Map from 0 -> a ^ (2 ^ 0) -> a, 1 -> a ^ (2 ^ 1) -> a^2, 2 -> a ^ (2 ^ 2) == a^4, ...
-	public static Map<Integer, Long> getPowersCache(long a, long n, long number) {
-		int currentHighestPower = 1;
-		int currentLogOfTwo = 0;
+	public static Map<Long, Long> getPowersCache(long a, long n, long number) {
+		long currentHighestPower = 1;
+		long currentLogOfTwo = 0;
 		// from power p -> a^p
-		Map<Integer, Long> powersCache = new HashMap<Integer, Long>();
-		powersCache.put(0, a);
+		Map<Long, Long> powersCache = new HashMap<Long, Long>();
+		powersCache.put(0L, a);
 		while(currentHighestPower * 2 < n) {
 			long valToSquare = powersCache.get(currentLogOfTwo);
 			currentHighestPower *= 2;
@@ -46,14 +49,14 @@ public class FermatPrimeTest extends PrimeTester {
 	}
 
 	// E.g, Set(0, 3) is for 2^0 + 2^3 = 9
-	public static Set<Integer> binaryExpansion(long x) {
+	public static Set<Long> binaryExpansion(long x) {
 		if(x <= 0) throw new IllegalArgumentException(x + " <= 0");
 		
 		String exp = Long.toBinaryString(x);
-		Set<Integer> binaryExpansion = new HashSet<Integer>();
-		int idx = 0;
+		Set<Long> binaryExpansion = new HashSet<Long>();
+		long idx = 0;
 		while(idx < exp.length()) {
-			if(exp.charAt(exp.length() - idx - 1) == '1') binaryExpansion.add(idx);
+			if(exp.charAt((int) (exp.length() - idx - 1)) == '1') binaryExpansion.add(idx);
 			idx++;
 		}
 		return binaryExpansion;
@@ -61,11 +64,11 @@ public class FermatPrimeTest extends PrimeTester {
 	
 	// Computes a ^ n % number
 	public static long power(long a, long n, long number) {
-		Map<Integer, Long> powersCache = getPowersCache(a, n, number);
-		Set<Integer> binaryExpansion = binaryExpansion(n);
+		Map<Long, Long> powersCache = getPowersCache(a, n, number);
+		Set<Long> binaryExpansion = binaryExpansion(n);
 		
 		long currentProduct = 1L;
-		for(Integer entry : binaryExpansion) {
+		for(Long entry : binaryExpansion) {
 			currentProduct = (currentProduct * powersCache.get(entry)) % number; 
 		}
 		

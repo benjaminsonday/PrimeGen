@@ -13,28 +13,28 @@ public class FermatPrimeTestTest {
 	
 	@Test
 	public void binaryExpansionOfOne() {
-		HashSet<Integer> set = new HashSet<Integer>();
-		set.add(0);
+		HashSet<Long> set = new HashSet<Long>();
+		set.add(0L);
 		Assert.assertTrue(FermatPrimeTest.binaryExpansion(1L).equals(set));
 	}
 	
 	@Test
 	public void binaryExpansionOf65() {
-		HashSet<Integer> set = new HashSet<Integer>();
-		set.add(6);
-		set.add(0);
+		HashSet<Long> set = new HashSet<Long>();
+		set.add(6L);
+		set.add(0L);
 		Assert.assertTrue(FermatPrimeTest.binaryExpansion(65L).equals(set));
 	}
 	
 	@Test
 	public void powersCacheFor65() {
-		Map<Integer, Long> cache = FermatPrimeTest.getPowersCache(4, 9, 31); // 4 ^ 9 mod 31
+		Map<Long, Long> cache = FermatPrimeTest.getPowersCache(4, 9, 31); // 4 ^ 9 mod 31
 		// should compute power 1, 2, 4, and 8
-		Map<Integer, Long> expectedCache = new HashMap<Integer, Long>();
-		expectedCache.put(0, 4L);
-		expectedCache.put(1, 16L);
-		expectedCache.put(2, (long) 256 % 31);
-		expectedCache.put(3, (long) (256 * 256) % 31);
+		Map<Long, Long> expectedCache = new HashMap<Long, Long>();
+		expectedCache.put(0L, 4L);
+		expectedCache.put(1L, 16L);
+		expectedCache.put(2L, (long) 256 % 31);
+		expectedCache.put(3L, (long) (256 * 256) % 31);
 		Assert.assertTrue(expectedCache.equals(cache));
 	}
 	
